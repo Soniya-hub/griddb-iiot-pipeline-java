@@ -2,7 +2,7 @@
 
 A compact, working example of an industrial-IoT time-series pipeline built on [GridDB](https://www.griddb.net/) using its native Java client. It models a turbine sensor, ingests a stream of timestamped readings with inline anomaly tagging, and runs the range, aggregation, and TQL queries an industrial monitoring system actually needs.
 
-Companion blog: **Building an Industrial IoT Sensor Pipeline with GridDB and Java** → `<add blog link here>`
+Companion blog: **Building an Industrial IoT Sensor Pipeline with GridDB and Java** → `https://github.com/Soniya-hub/griddb-iiot-pipeline-java/blob/main/griddb-iiot-java-blog.md`
 
 ![Architecture](griddb-iiot-pipeline-diagram.svg)
 
