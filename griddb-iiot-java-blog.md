@@ -154,4 +154,4 @@ From here, the natural next steps are to fan out to multiple containers (one per
 
 ---
 
-*Code for this tutorial is available on GitHub: `<add your repo link here>`.*
+*Code for this tutorial is available on GitHub: `https://github.com/Soniya-hub/griddb-iiot-pipeline-java/blob/main/SensorPipeline.java`*
