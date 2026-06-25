@@ -2,7 +2,7 @@
 
 Industrial equipment is chatty. A single turbine, pump, or CNC machine can emit temperature, vibration, pressure, and status readings every few seconds, and a factory floor might run hundreds of them in parallel. The result is a relentless, ordered stream of timestamped measurements — the classic *time-series* workload. Storing that stream in a general-purpose relational database works until it doesn't: indexes bloat, inserts slow down under sustained load, and range scans over millions of rows start timing out right when you need them for a dashboard or an alert.
 
-This is exactly the problem [GridDB](https://www.griddb.net/) was built for. GridDB is an open-source, in-memory-first database from Toshiba, designed specifically for time-series and IoT data. In this tutorial we'll model a sensor stream, ingest simulated readings, and run the kind of time-range and aggregation queries that an industrial monitoring system actually needs — all in plain Java, which happens to be GridDB's native client.
+This is the shape of problem [GridDB](https://www.griddb.net/) is tuned for. Originally developed by Toshiba and now open source, it leans on an in-memory-first engine and a data model that treats timestamped records as a first-class citizen rather than just another set of rows. In this tutorial we'll model a sensor stream, push simulated readings into it, and run the kind of time-bounded and aggregate queries an industrial monitoring system leans on day to day — all in plain Java, which is the database's native client language.
 
 ## Why GridDB for time-series data
 
@@ -10,11 +10,11 @@ GridDB's data model is built around two ideas that make it a strong fit for IoT.
 
 The first is the **key-container model**. Instead of one giant table holding readings from every device, GridDB encourages one *container* per data source. Each turbine gets its own time-series container, which keeps related data physically together and lets the engine partition and parallelize across thousands of containers without contention.
 
-The second is the **TimeSeries container** itself — a specialized container type whose row key *must* be a timestamp. Because GridDB knows the data is time-ordered, it can compress it efficiently, interpolate gaps, and answer range queries and aggregations without scanning the whole dataset. You get the performance characteristics of a purpose-built time-series store while still writing ordinary Java objects.
+The second is the **TimeSeries container** itself — a specialized container type whose row key *must* be a timestamp. Since the engine already knows the rows arrive in chronological order, it can store them compactly, fill in missing points where needed, and resolve range and aggregate queries without walking the entire dataset. The upshot: you get the behaviour of a purpose-built time-series store while still working with ordinary Java objects.
 
 ## Setting up
 
-GridDB's Community Edition runs on Linux and ships an official Docker image and `.deb`/`.rpm` packages; the [GitHub quickstart](https://github.com/griddb/griddb) walks through starting a single node and joining a cluster. Once a node is running with a cluster name (we'll use `myCluster`), you only need the Java client on your classpath.
+GridDB's Community Edition targets Linux, and you can bring up a node either from the official Docker image or from the `.deb`/`.rpm` packages; the [GitHub quickstart](https://github.com/griddb/griddb) covers starting a node and joining it to a cluster. Once it's up and you've picked a cluster name (we'll use `myCluster`), the only thing your application needs is the Java client on its classpath.
 
 If you're using Maven, add the GridStore client dependency:
 
@@ -154,4 +154,4 @@ From here, the natural next steps are to fan out to multiple containers (one per
 
 ---
 
-*Code for this tutorial is available on GitHub: `https://github.com/Soniya-hub/griddb-iiot-pipeline-java/blob/main/SensorPipeline.java`*
+*Code for this tutorial is available on GitHub: `https://github.com/Soniya-hub/griddb-iiot-pipeline-java/tree/main`.*
